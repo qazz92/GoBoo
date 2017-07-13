@@ -5,9 +5,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"github.com/qazz92/GoBoo/controller"
+	"runtime"
 )
+func MaxParallelism() int {
+	maxProcs := runtime.GOMAXPROCS(0)
+	numCPU := runtime.NumCPU()
+	if maxProcs < numCPU {
+		return maxProcs
+	}
+	return numCPU
+}
 
 func main() {
+	runtime.GOMAXPROCS(MaxParallelism())
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()

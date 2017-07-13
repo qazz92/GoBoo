@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"runtime"
 	"github.com/PuerkitoBio/goquery"
 	"fmt"
 	"encoding/json"
@@ -14,15 +13,6 @@ type meal struct {
 	Inter    string
 	Bumin_kyo string
 	Gang string
-}
-
-func MaxParallelism() int {
-	maxProcs := runtime.GOMAXPROCS(0)
-	numCPU := runtime.NumCPU()
-	if maxProcs < numCPU {
-		return maxProcs
-	}
-	return numCPU
 }
 
 func getMealSelect(date string) *goquery.Selection {
@@ -53,8 +43,6 @@ func GetMeal(date string) meal{
 	} else {
 
 		fmt.Println("meal crawler!")
-
-		runtime.GOMAXPROCS(MaxParallelism())
 
 		var wg sync.WaitGroup
 
