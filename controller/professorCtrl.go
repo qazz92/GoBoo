@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"github.com/qazz92/GoBoo/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"github.com/qazz92/goTest/redis"
 	"fmt"
 	"encoding/json"
-	"github.com/qazz92/goTest/mysql"
+	"github.com/qazz92/GoBoo/redis"
 )
 
 type professor struct {

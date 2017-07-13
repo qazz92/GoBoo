@@ -3,11 +3,11 @@ package controller
 import (
 	"runtime"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/qazz92/goTest/redis"
 	"fmt"
 	"encoding/json"
 	"sync"
-	"github.com/qazz92/goTest/crawler"
+	"github.com/qazz92/GoBoo/crawler"
+	"github.com/qazz92/GoBoo/redis"
 )
 
 type meal struct {

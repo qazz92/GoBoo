@@ -3,7 +3,7 @@ package controller
 import (
 	"strings"
 	"regexp"
-	"github.com/qazz92/goTest/crawler"
+	"github.com/qazz92/GoBoo/crawler"
 )
 
 type seat struct {

@@ -1,14 +1,14 @@
 package controller
 
 import (
-	"github.com/qazz92/goTest/mysql"
+	"github.com/qazz92/GoBoo/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"fmt"
 	"strings"
 	"strconv"
 	"encoding/json"
-	"github.com/qazz92/goTest/redis"
+	"github.com/qazz92/GoBoo/redis"
 )
 
 type emptyRoom struct {
