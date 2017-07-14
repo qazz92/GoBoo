@@ -7,11 +7,11 @@ import (
 )
 
 type seat struct {
-	Loc string
-	All string
-	Use string
-	Remain string
-	Util string
+	Loc string `json:"loc"`
+	All string `json:"all"`
+	Use string `json:"use"`
+	Remain string `json:"remain"`
+	Util string `json:"util"`
 }
 
 func GetWebSeat() []seat {

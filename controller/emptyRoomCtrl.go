@@ -12,7 +12,7 @@ import (
 )
 
 type emptyRoom struct {
-	Room_no string
+	Room_no string `json:"room_no"`
 }
 
 func GetEmptyRoom(day int, from int, to int) []emptyRoom {

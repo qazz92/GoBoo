@@ -10,9 +10,9 @@ import (
 )
 
 type meal struct {
-	Inter    string
-	Bumin_kyo string
-	Gang string
+	Inter    string `json:"inter"`
+	Bumin_kyo string `json:"bumin_kyo"`
+	Gang string `json:"gang"`
 }
 
 func getMealSelect(date string) *goquery.Selection {

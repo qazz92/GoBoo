@@ -3,11 +3,20 @@ package redis
 import (
 	"github.com/go-redis/redis"
 	"time"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
 )
 
 func NewClient() *redis.Client {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	url := os.Getenv("INMISHOST")
+
 	client := redis.NewClient(&redis.Options{
-		Addr:     "168.115.128.42:6379",
+		Addr:     url+":6379",
 		Password: "Q!2dltnals", // no password set
 		DB:       0,  // use default DB
 	})

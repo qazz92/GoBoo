@@ -10,13 +10,13 @@ import (
 )
 
 type professor struct {
-	Id int
-	Name string
-	Room string
-	Tel string
-	Email string
-	Major string
-	Pos string
+	Id int `json:"id"`
+	Name string `json:"name"`
+	Room string `json:"room"`
+	Tel string `json:"tel"`
+	Email string `json:"email"`
+	Major string `json:"major"`
+	Pos string `json:"pos"`
 }
 
 func GetProfessors(major string) []professor {
