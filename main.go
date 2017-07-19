@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"github.com/qazz92/GoBoo/controller"
 	"runtime"
+	"github.com/jpillora/ipfilter"
+	"github.com/qazz92/GoBoo/realip"
 )
 func MaxParallelism() int {
 	maxProcs := runtime.GOMAXPROCS(0)
@@ -16,12 +18,28 @@ func MaxParallelism() int {
 	return numCPU
 }
 
+func BlockMiddleware(c *gin.Context) {
+	host := realip.RealIP(c.Request)
+	f, _ := ipfilter.New(ipfilter.Options{
+		AllowedCountries: []string{"KR"},
+	})
+	if f.Blocked(host) {
+		c.Abort()
+		return
+	}
+	// Pass on to the next-in-chain
+	c.Next()
+}
+
 func main() {
 	runtime.GOMAXPROCS(MaxParallelism())
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
 
+
+
+	r.Use(BlockMiddleware)
 	// gin.H is a shortcut for map[string]interface{}
 	r.GET("/meal", func(c *gin.Context) {
 		date := c.Query("date")
