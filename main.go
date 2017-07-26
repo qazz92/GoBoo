@@ -8,6 +8,8 @@ import (
 	"runtime"
 	"github.com/jpillora/ipfilter"
 	"github.com/qazz92/GoBoo/realip"
+	"log"
+	"github.com/gin-contrib/gzip"
 )
 func MaxParallelism() int {
 	maxProcs := runtime.GOMAXPROCS(0)
@@ -21,8 +23,10 @@ func MaxParallelism() int {
 func BlockMiddleware(c *gin.Context) {
 	host := realip.RealIP(c.Request)
 	f, _ := ipfilter.New(ipfilter.Options{
-		AllowedCountries: []string{"KR"},
+		BlockByDefault: true,
 	})
+	f.AllowCountry("KR")
+	log.Println(host)
 	if f.Blocked(host) {
 		c.Abort()
 		return
@@ -36,7 +40,7 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
-
+	r.Use(gzip.Gzip(gzip.DefaultCompression))
 
 
 	r.Use(BlockMiddleware)
