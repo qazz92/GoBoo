@@ -75,7 +75,6 @@ func GetMeal(date string) meal{
 
 		redis.SetValueToRedis("meal_"+date,crawlerResultToMealMarshal,0)
 
-
 		return crawlerResultToMeal
 	}
 }

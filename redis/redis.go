@@ -25,17 +25,19 @@ func NewClient() *redis.Client {
 }
 
 func GetValueFromRedis(key string) string {
-	value,err := NewClient().Get(key).Result()
-
+	client := NewClient()
+	value,err :=client.Get(key).Result()
+	defer client.Close()
 	if err != nil {
 		return ""
 	}
-
 	return value
 }
 
 func SetValueToRedis(key string, value interface{},exd int)  {
-	err := NewClient().Set(key,value,time.Duration(exd)).Err()
+	client := NewClient()
+	err := client.Set(key,value,time.Duration(exd)).Err()
+	defer client.Close()
 	if err != nil {
 		panic(err)
 	}
