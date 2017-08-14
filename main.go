@@ -26,6 +26,7 @@ func BlockMiddleware(c *gin.Context) {
 		BlockByDefault: true,
 	})
 	f.AllowCountry("KR")
+
 	log.Println(host)
 	if f.Blocked(host) {
 		c.Abort()
@@ -37,13 +38,13 @@ func BlockMiddleware(c *gin.Context) {
 
 func main() {
 	runtime.GOMAXPROCS(MaxParallelism())
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
 	r.Use(gzip.Gzip(gzip.DefaultCompression))
 
 
-	r.Use(BlockMiddleware)
+	//r.Use(BlockMiddleware)
 	// gin.H is a shortcut for map[string]interface{}
 	r.GET("/meal", func(c *gin.Context) {
 		date := c.Query("date")
@@ -55,6 +56,10 @@ func main() {
 	r.GET("/getPro", func(c *gin.Context) {
 		major := c.Query("major")
 		c.JSON(http.StatusOK, gin.H{"result_code":http.StatusOK,"result_body":controller.GetProfessors(major)})
+	})
+
+	r.GET("/fcm", func(c *gin.Context) {
+		controller.Run()
 	})
 
 	r.GET("/getEmptyRoom", func(c *gin.Context) {
