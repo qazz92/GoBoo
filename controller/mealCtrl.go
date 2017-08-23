@@ -4,7 +4,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"fmt"
 	"encoding/json"
-	"sync"
 	"github.com/qazz92/GoBoo/crawler"
 	"github.com/qazz92/GoBoo/redis"
 )
@@ -13,6 +12,9 @@ type meal struct {
 	Inter    string `json:"inter"`
 	Bumin_kyo string `json:"bumin_kyo"`
 	Gang string `json:"gang"`
+	Hadan_kyo string `json:"hadan_kyo"`
+	Hadan_gang string `json:"hadan_gang"`
+	Library string `json:"library"`
 }
 
 func getMealSelect(date string) *goquery.Selection {
@@ -44,28 +46,30 @@ func GetMeal(date string) meal{
 
 		fmt.Println("meal crawler!")
 
-		var wg sync.WaitGroup
-
 		total := getMealSelect(date)
 
-		results := make([]string, 3)
+		results := make([]string, 6)
 
-		for idx := 7;  idx<=9; idx++ {
-			wg.Add(1)
+		count := 0
 
-			go func(total *goquery.Selection, idx int) {
-				defer wg.Done()
+		for idx := 0;  idx<=9; idx++ {
+			if idx==0 || idx==1 || idx==3 || idx==7 || idx==8 || idx==9 {
 				result, _ := total.Eq(idx).Html()
-				results[idx-7] = result
-			}(total,idx)
-		}
-		wg.Wait()
+				results[count] = result
+				count += 1
 
+			}
+		}
 		var crawlerResultToMeal meal
 
-		crawlerResultToMeal.Inter = results[0]
-		crawlerResultToMeal.Bumin_kyo = results[1]
-		crawlerResultToMeal.Gang = results[2]
+		fmt.Println(len(results))
+
+		crawlerResultToMeal.Hadan_kyo = results[0]
+		crawlerResultToMeal.Hadan_gang = results[1]
+		crawlerResultToMeal.Library = results[2]
+		crawlerResultToMeal.Inter = results[3]
+		crawlerResultToMeal.Bumin_kyo = results[4]
+		crawlerResultToMeal.Gang = results[5]
 
 		crawlerResultToMealMarshal, err := json.Marshal(crawlerResultToMeal)
 

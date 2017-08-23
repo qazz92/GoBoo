@@ -4,6 +4,7 @@ import (
 	"strings"
 	"regexp"
 	"github.com/qazz92/GoBoo/crawler"
+	"strconv"
 )
 
 type seat struct {
@@ -12,6 +13,7 @@ type seat struct {
 	Use string `json:"use"`
 	Remain string `json:"remain"`
 	Util string `json:"util"`
+	Url string `json:"url"`
 }
 
 func GetWebSeat() []seat {
@@ -23,7 +25,7 @@ func GetWebSeat() []seat {
 	total := doc.Find("table").Eq(1)
 
 	var webSeatSlice []seat
-	for idx:=12; idx<23;idx++  {
+	for idx:=2; idx<23;idx++  {
 		row := total.Find("tr").Eq(idx)
 		var webSeat seat
 		for rowIdx:=0; rowIdx<5;rowIdx++  {
@@ -49,6 +51,7 @@ func GetWebSeat() []seat {
 				break
 			}
 		}
+		webSeat.Url = "http://168.115.33.207/WebSeat/roomview5.asp?room_no="+strconv.Itoa(idx-1)
 		webSeatSlice = append(webSeatSlice, webSeat)
 	}
 
