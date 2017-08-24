@@ -40,7 +40,7 @@ func GetMeal(date string) meal{
 		if err != nil {
 			fmt.Println("json Err")
 		}
-		return meal{Inter:redisResultToMeal.Inter,Bumin_kyo:redisResultToMeal.Bumin_kyo,Gang:redisResultToMeal.Gang}
+		return meal{Inter:redisResultToMeal.Inter,Bumin_kyo:redisResultToMeal.Bumin_kyo,Gang:redisResultToMeal.Gang,Hadan_kyo:redisResultToMeal.Hadan_kyo,Hadan_gang:redisResultToMeal.Hadan_gang,Library:redisResultToMeal.Library}
 
 	} else {
 
