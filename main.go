@@ -58,6 +58,11 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"result_code":http.StatusOK,"result_body":controller.GetProfessors(major)})
 	})
 
+	r.GET("/getPushPermit", func(c *gin.Context) {
+		stuId := c.Query("stuId")
+		c.JSON(http.StatusOK, gin.H{"result_code":http.StatusOK,"push_permit":controller.GetPushPermit(stuId)})
+	})
+
 	r.GET("/fcm", func(c *gin.Context) {
 		controller.Run()
 	})
