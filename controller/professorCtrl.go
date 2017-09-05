@@ -46,7 +46,7 @@ func GetProfessors(major string) []professor {
 
 		defer db.Close()
 
-		rows, err := db.Query("SELECT * FROM professors WHERE major = ?", major)
+		rows, err := db.Query("SELECT * FROM professors WHERE major = ?  ORDER BY name", major)
 		if err != nil {
 			log.Fatal(err)
 		}
